@@ -64,3 +64,54 @@ public class Mammal : Animal
         scoreAmount += amount;
     }
 } */
+
+/* public class Pokemon
+{
+    int dexNumber;
+    string speciesName;
+    string type;
+    int attackStat;
+    int defenseStat;
+    Health health;
+
+    public Pokemon(int dexNumber, string name, string type)
+    {
+        this.dexNumber = dexNumber;
+        this.speciesName = name;
+        this.type = type;
+    }
+
+    public Pokemon(int dexNumber, string name, string type, int attackStat, int defenseStat) : this(dexNumber, name, type)
+    {
+        this.attackStat = attackStat;
+        this.defenseStat = defenseStat;
+        this.health = new Health(defenseStat);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        this.health.DeductHealth(damage);
+    }
+
+    public void Attack(Pokemon opponent)
+    {
+        opponent.TakeDamage(attackStat);
+    }
+}
+
+public class EvolvingPokemon : Pokemon
+{
+    int evoLevel;
+
+    public EvolvingPokemon(int dexNumber, string name, string type, int evoLevel) : base(dexNumber, name, type)
+    {
+        this.evoLevel = evoLevel;
+    }
+
+    public EvolvingPokemon(int dexNumber, string name, string type, int attackStat, int defenseStat, int evoLevel) 
+    : base(dexNumber, name, type, attackStat, defenseStat)
+    {
+        this.evoLevel = evoLevel;
+    }
+
+} */

@@ -16,6 +16,7 @@ public class Health
     public Health(float _maxHealth)
     {
         maxHealth = _maxHealth;
+        currentHealth = _maxHealth;
     }
 
     public Health()

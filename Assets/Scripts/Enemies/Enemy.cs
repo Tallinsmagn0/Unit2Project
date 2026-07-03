@@ -11,11 +11,13 @@ public class Enemy : PlayableObject
 
     public virtual void Attack()
     {
+        SpawnBullet();
         Debug.Log($"Enemy attacking.");
     }
 
     public virtual void Attack(float interval)
     {
+        SpawnBullet();
         Debug.Log($"Enemy attacking with interval {interval}");
     }
 
