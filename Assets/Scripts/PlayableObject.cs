@@ -3,16 +3,26 @@ using UnityEngine;
 /// <summary>
 /// PlayableObject type for game playable objects like player or enemies
 /// </summary>
-public class PlayableObject : MonoBehaviour
+public class PlayableObject : MonoBehaviour, IDamageable
 {
     protected Health health = new Health();
     public Weapon weapon;
 
     [SerializeField]  protected float speed;
+    [SerializeField]  protected float damage;
 
-    public virtual void Move()
+    private void Update()
     {
-        Debug.Log($"Moving!");
+
+    }
+
+    public void GetDamage(float damage)
+    {
+        health.DeductHealth(damage);
+        if (health.GetHealth() <= 0)
+        {
+            Defeated();
+        }
     }
 
     public virtual void Move(Vector3 direction)
@@ -51,4 +61,6 @@ public class PlayableObject : MonoBehaviour
     {
         Debug.Log("Oops");
     }
+
+
 }

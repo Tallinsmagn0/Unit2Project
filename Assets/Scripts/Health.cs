@@ -24,18 +24,28 @@ public class Health
         
     }
 
+    public float GetHealth()
+    {
+        return currentHealth;
+    }
+
+    public void SetHealth(float health)
+    {
+        currentHealth = health;
+    }
+
     public void AddHealth(float value)
     {
-        currentHealth += value;
+        currentHealth = Mathf.Min(currentHealth + value, maxHealth);
     }
 
     public void DeductHealth(float value)
     {
-        currentHealth -= value;
+        currentHealth = Mathf.Max(currentHealth - value, 0);
     }
 
-    public float GetHealth()
+    public void RegenHealth()
     {
-        return currentHealth;
+        AddHealth(healthRegenRate * Time.deltaTime);
     }
 }

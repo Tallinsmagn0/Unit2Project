@@ -3,6 +3,28 @@ using UnityEngine;
 public class Enemy : PlayableObject
 {
     private EnemyType enemyType;
+    protected Transform target;
+
+    protected virtual void Start()
+    {
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+
+    protected virtual void Update()
+    {
+        if (target != null)
+        {
+            Move(target.position);
+        } else
+        {
+            Move();
+        }
+    }
+
+    public void Move()
+    {
+        transform.Translate(Vector2.right * speed * Time.deltaTime);
+    }
 
     public void Move(Transform target)
     {
@@ -24,6 +46,7 @@ public class Enemy : PlayableObject
     public void Defeated(string message)
     {
         Debug.Log($"Enemy was defeated! They left a message: {message}");
+        Destroy(gameObject);
     }
 
     public void SetEnemyType(EnemyType _enemyType)
