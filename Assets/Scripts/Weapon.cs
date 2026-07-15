@@ -8,7 +8,7 @@ public class Weapon
     private float damage;
     private float bulletSpeed;
 
-    public Weapon(string _name, float _damage, float _bulletSpeed = 10)
+    public Weapon(string _name, float _damage, float _bulletSpeed = 1000)
     {
         name = _name;
         damage = _damage;
@@ -25,7 +25,7 @@ public class Weapon
     {
         Bullet bullet = GameObject.Instantiate(_bullet, _shooter.transform.position, _shooter.transform.rotation);
         bullet.SetBullet(damage, _targetTag, bulletSpeed);
-        GameObject.Destroy(bullet, _bulletLifetime);
+        GameObject.Destroy(bullet.gameObject, _bulletLifetime);
     }
 
     public float GetDamage()

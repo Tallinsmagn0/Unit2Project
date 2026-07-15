@@ -1,29 +1,27 @@
 using UnityEngine;
-using System;
 
 public class Player : PlayableObject
 {
+    // Object references
     [SerializeField] private Camera camera;
-    private Rigidbody2D playerRB;
 
-    [SerializeField] private float weaponDamage;
+    // Attack variables
+    [SerializeField] private float weaponDamage = 10;
     [SerializeField] private float bulletSpeed = 10;
     [SerializeField] private Bullet bulletPrefab;
 
-    public Action<float> OnHealthUpdate;
+    private Rigidbody2D playerRB;
 
     private void Start()
     {
         health = new Health(100, 0.5f, 100);
         playerRB = GetComponent<Rigidbody2D>();
-
-        OnHealthUpdate?.Invoke(health.GetHealth());
+        weapon = new Weapon("Player Weapon", weaponDamage, bulletSpeed);
     }
 
     void Update()
     {
         health.RegenHealth();
-        OnHealthUpdate.Invoke(health.GetHealth());
     }
 
     public void Move(Vector3 direction, Vector2 target)
@@ -38,11 +36,6 @@ public class Player : PlayableObject
         transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
-    public override void Move(Vector3 direction)
-    {
-        base.Move(direction);
-    }
-
     public override void Shoot()
     {
         weapon.Shoot(bulletPrefab, this, "Enemy", 5);
@@ -51,7 +44,6 @@ public class Player : PlayableObject
     public override void GetDamage(float damage)
     {
         health.DeductHealth(damage);
-        OnHealthUpdate.Invoke(health.GetHealth());
 
         if (health.GetHealth() <= 0)
         {

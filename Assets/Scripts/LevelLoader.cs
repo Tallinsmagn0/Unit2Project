@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class LevelLoader : MonoBehaviour
 {
@@ -30,7 +31,18 @@ public class LevelLoader : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Player player = Instantiate(playerPrefab);
+
+        Health health = new Health(100, 0);
+
+        try
+        {
+            health.SetHealth(105);
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+        }
+        /* Player player = Instantiate(playerPrefab);
 
         Enemy enemy1 = Instantiate(enemyPrefab);
         Enemy enemy2 = Instantiate(enemyPrefab);
@@ -51,7 +63,7 @@ public class LevelLoader : MonoBehaviour
         player.Move(moveDirection);
         player.Shoot(shootDirection, 5);
 
-        Debug.Log($"Weapon count is {Weapon.weaponCount}");
+        Debug.Log($"Weapon count is {Weapon.weaponCount}"); */
     }
 
     // Update is called once per frame

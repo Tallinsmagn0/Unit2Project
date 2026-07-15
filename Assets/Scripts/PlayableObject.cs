@@ -3,66 +3,28 @@ using UnityEngine;
 /// <summary>
 /// PlayableObject type for game playable objects like player or enemies
 /// </summary>
-public class PlayableObject : MonoBehaviour, IDamageable
+public abstract class PlayableObject : MonoBehaviour, IDamageable
 {
     protected Health health = new Health();
     public Weapon weapon;
 
     [SerializeField]  protected float speed;
-    [SerializeField]  protected float damage;
 
-    private void Update()
+    public abstract void GetDamage(float damage);
+
+    public virtual void Move(Vector2 direction)
     {
-
-    }
-
-    public virtual void GetDamage(float damage)
-    {
-        health.DeductHealth(damage);
-        if (health.GetHealth() <= 0)
-        {
-            Defeated();
-        }
-    }
-
-    public virtual void Move(Vector3 direction)
-    {
-        Debug.Log($"Moving towards {direction}!");
+        
     }
 
     public virtual void Move(Vector3 direction, float speed)
     {
-        Debug.Log($"Moving towards {direction} at speed {speed}!");
+        
     }
 
-    public virtual void SpawnBullet() { }
+    public abstract void Shoot();
 
-    public virtual void Shoot()
-    {
-        Debug.Log($"{name} is shooting!");
-    }
-
-    public virtual void Shoot(Vector3 direction, float speed)
-    {
-        if (weapon != null)
-        {
-            
-        } else
-        {
-            
-        }
-        Debug.Log($"{name} is shooting towards {direction} at speed {speed}!");
-    }
-
-    public virtual void Shoot(Vector3 direction, float speed, float extraDamage)
-    {
-        Debug.Log($"{name} is shooting towards {direction} at speed {speed} with {extraDamage} extra dammage!");
-    }
-
-    public virtual void Defeated()
-    {
-        Debug.Log("Oops");
-    }
+    public abstract void Defeated();
 
 
 }

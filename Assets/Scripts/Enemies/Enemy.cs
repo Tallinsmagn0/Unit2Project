@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class Enemy : PlayableObject
 {
@@ -7,7 +8,16 @@ public class Enemy : PlayableObject
 
     protected virtual void Start()
     {
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        try
+        {
+            target = GameManager.GetInstance().GetPlayer().transform;
+        }
+        catch (NullReferenceException e)
+        {
+            Debug.Log("There is no player in the scene! Goodbye!");
+            Destroy(gameObject);
+        }
+        health = new Health(100);
     }
 
     protected virtual void Update()
@@ -47,26 +57,37 @@ public class Enemy : PlayableObject
         transform.Translate(Vector2.right * _speed * Time.deltaTime);
     }
 
+    public override void Shoot() { }
+
     public virtual void Attack()
     {
-        SpawnBullet();
         Debug.Log($"Enemy attacking.");
     }
 
     public virtual void Attack(float interval)
     {
-        SpawnBullet();
         Debug.Log($"Enemy attacking with interval {interval}");
     }
 
-    public void Defeated(string message)
+    public override void Defeated()
     {
-        Debug.Log($"Enemy was defeated! They left a message: {message}");
         Destroy(gameObject);
     }
 
     public void SetEnemyType(EnemyType _enemyType)
     {
         enemyType = _enemyType;
+    }
+
+    public override void GetDamage(float damage)
+    {
+        health.DeductHealth(damage);
+
+        Debug.Log("Enemy health: " + health.GetHealth());
+
+        if (health.GetHealth() == 0)
+        {
+            Defeated();
+        }
     }
 }

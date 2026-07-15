@@ -1,20 +1,45 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ScoreManager : MonoBehaviour
 {
-    private int _seconds;
+    private int score;
+    private int highScore;
 
-    public string timer
+    public UnityEvent OnScoreUpdated;
+    public UnityEvent OnHighScoreUpdated;
+
+    void Start()
     {
-        get
-        {
-            return 
-            Mathf.Round((float) _seconds / 60f).ToString()
-            + " minutes and " 
-            + _seconds % 60
-            + " seconds";
-        }
+        highScore = PlayerPrefs.GetInt("HighScore");
+    }
 
-        private set { }
+    public int GetScore()
+    {
+        return score;
+    }
+
+    public int GetHighScore()
+    {
+        return highScore;
+    }
+
+    public void IncrementScore()
+    {
+        score++;
+        Debug.Log("Score: " + score);
+        OnScoreUpdated?.Invoke();
+
+        if (score > highScore)
+        {
+            highScore = score;
+            OnHighScoreUpdated?.Invoke();
+            SaveHighScore();
+        }
+    }
+
+    public void SaveHighScore()
+    {
+        PlayerPrefs.SetInt("HighScore", highScore);
     }
 }

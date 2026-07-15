@@ -2,10 +2,9 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float damage;
 
-    [SerializeField] private float speed;
-
+    [SerializeField] private float speed = 10;
+    private float damage;
     private string targetTag;
 
     private void Update()
@@ -40,10 +39,14 @@ public class Bullet : MonoBehaviour
         if (damageable != null)
         {
             damageable.GetDamage(damage);
-            Debug.Log("Damaged something");
-            LevelLoader.AddScore(10);
+            AddScore();
             Destroy(gameObject);
         }
+    }
+
+    void AddScore()
+    {
+        GameManager.GetInstance().GetScoreManager().IncrementScore();
     }
 
     void OnTriggerEnter2D(Collider2D collider)
