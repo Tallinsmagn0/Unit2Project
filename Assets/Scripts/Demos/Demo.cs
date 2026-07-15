@@ -14,7 +14,7 @@ public class Animal
     public virtual void MakeSound()
     {
         Console.WriteLine($"{name} says {sound}.");
-    }
+    };
 }
 
 public class Bird : Animal
@@ -115,3 +115,22 @@ public class EvolvingPokemon : Pokemon
     }
 
 } */
+
+using UnityEngine;
+using System.Collections.Generic;
+
+public class ListDemo : MonoBehaviour
+{
+    List<string> myList = new List<string>();
+
+    void Start()
+    {
+        myList.Add("Hello!");
+        myList.Add("How are you?");
+        myList.Add("Good I guess...");
+
+        myList.RemoveAt(1);
+
+        myList.Clear();
+    }
+}

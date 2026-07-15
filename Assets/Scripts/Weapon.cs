@@ -6,11 +6,13 @@ public class Weapon
     public static int weaponCount = 0;
     private string name;
     private float damage;
+    private float bulletSpeed;
 
-    public Weapon(string _name, float _damage)
+    public Weapon(string _name, float _damage, float _bulletSpeed = 10)
     {
         name = _name;
         damage = _damage;
+        bulletSpeed = _bulletSpeed;
         weaponCount++;
     }
 
@@ -19,8 +21,15 @@ public class Weapon
         weaponCount++;
     }
 
-    public void Shoot()
+    public void Shoot(Bullet _bullet, PlayableObject _shooter, string _targetTag, float _bulletLifetime)
     {
-        Debug.Log($"Using {name} to shoot for {damage} damage");
+        Bullet bullet = GameObject.Instantiate(_bullet, _shooter.transform.position, _shooter.transform.rotation);
+        bullet.SetBullet(damage, _targetTag, bulletSpeed);
+        GameObject.Destroy(bullet, _bulletLifetime);
+    }
+
+    public float GetDamage()
+    {
+        return damage;
     }
 }

@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class LevelLoader : MonoBehaviour
 {
+
+    private static LevelLoader instance;
+    public static LevelLoader GetInstance()
+    {
+        return instance;
+    }
     public static int levelScore = 0;
 
     public Player playerPrefab;
@@ -10,6 +16,15 @@ public class LevelLoader : MonoBehaviour
     public static void AddScore(int score)
     {
         levelScore += score;
+    }
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this);
+        }
+        instance = this;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

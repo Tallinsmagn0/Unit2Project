@@ -2,17 +2,18 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private float damage;
+    [SerializeField] private float damage;
 
-    [SerializeField]  protected float speed;
+    [SerializeField] private float speed;
 
+    private string targetTag;
 
-    float GetDamage()
+    private void Update()
     {
-        return damage;
+        Move();
     }
 
-    void Move()
+    private void Move()
     {
         transform.Translate(Vector2.right * speed * Time.deltaTime);
     }
@@ -22,7 +23,19 @@ public class Bullet : MonoBehaviour
         Debug.Log($"Bullet is moving toward {target.name} to do {damage} damage!");
     }
 
-    void ApplyDamage(IDamageable damageable)
+    public void SetBullet(float _damage, string _targetTag, float _speed = 10)
+    {
+        damage = _damage;
+        targetTag = _targetTag;
+        speed = _speed;
+    }
+
+    float GetDamage()
+    {
+        return damage;
+    }
+
+    void Damage(IDamageable damageable)
     {
         if (damageable != null)
         {
@@ -35,7 +48,10 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        IDamageable damageable = collider.GetComponent<IDamageable>();
-        ApplyDamage(damageable);
+        if (collider.gameObject.CompareTag(targetTag))
+        {
+            IDamageable damageable = collider.GetComponent<IDamageable>();
+            Damage(damageable);
+        }
     }
 }

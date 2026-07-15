@@ -16,7 +16,7 @@ public class PlayableObject : MonoBehaviour, IDamageable
 
     }
 
-    public void GetDamage(float damage)
+    public virtual void GetDamage(float damage)
     {
         health.DeductHealth(damage);
         if (health.GetHealth() <= 0)
@@ -35,9 +35,11 @@ public class PlayableObject : MonoBehaviour, IDamageable
         Debug.Log($"Moving towards {direction} at speed {speed}!");
     }
 
-    public virtual void SpawnBullet()
+    public virtual void SpawnBullet() { }
+
+    public virtual void Shoot()
     {
-        
+        Debug.Log($"{name} is shooting!");
     }
 
     public virtual void Shoot(Vector3 direction, float speed)

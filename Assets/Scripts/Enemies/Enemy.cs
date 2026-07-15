@@ -26,9 +26,25 @@ public class Enemy : PlayableObject
         transform.Translate(Vector2.right * speed * Time.deltaTime);
     }
 
+    public void Move(Vector2 direction)
+    {
+        direction.x -= transform.position.x;
+        direction.y -= transform.position.y;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
+        transform.Translate(Vector2.right * speed * Time.deltaTime);
+    }
+
     public void Move(Transform target)
     {
-        Debug.Log($"Moving towards {target.name}!");
+        transform.LookAt(target.position);
+        transform.Translate(Vector2.right * speed * Time.deltaTime);
+    }
+
+    public void Move(float _speed)
+    {
+        transform.Translate(Vector2.right * _speed * Time.deltaTime);
     }
 
     public virtual void Attack()
