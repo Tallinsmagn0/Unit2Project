@@ -19,18 +19,14 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
-    void Awake()
-    {
-        SetSingleton();
-    }
     // ------ End Singleton Setup ------
 
     [SerializeField] private ScoreManager scoreManager;
     private Player player;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
+        SetSingleton();
         FindPlayer();
     }
 

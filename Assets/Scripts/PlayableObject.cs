@@ -5,7 +5,8 @@ using UnityEngine;
 /// </summary>
 public abstract class PlayableObject : MonoBehaviour, IDamageable
 {
-    protected Health health = new Health();
+    public Health health = new Health();
+
     public Weapon weapon;
 
     [SerializeField]  protected float speed;

@@ -12,7 +12,7 @@ public class Player : PlayableObject
 
     private Rigidbody2D playerRB;
 
-    private void Start()
+    private void Awake()
     {
         health = new Health(100, 0.5f, 100);
         playerRB = GetComponent<Rigidbody2D>();

@@ -2,15 +2,22 @@ using UnityEngine;
 
 public class HealthPickup : Pickup, IDamageable
 {
+
+    [SerializeField] private float healthMin = 25;
+    [SerializeField] private float healthMax = 50;
+
     public override void OnPicked()
     {
         base.OnPicked();
 
-        Debug.Log("Picked up health");
+        float health = Random.Range(healthMin, healthMax);
+        Player player = GameManager.GetInstance().GetPlayer();
+
+        player.health.AddHealth(health);
     }
 
     public void GetDamage(float damage)
     {
-        Debug.Log("Take damage");
+        base.OnPicked();
     }
 }
