@@ -6,8 +6,8 @@ public class ScoreManager : MonoBehaviour
     private int score;
     private int highScore;
 
-    public UnityEvent OnScoreUpdated;
-    public UnityEvent OnHighScoreUpdated;
+    public UnityEvent<int> OnScoreUpdated;
+    public UnityEvent<int> OnHighScoreUpdated;
 
     void Start()
     {
@@ -28,12 +28,12 @@ public class ScoreManager : MonoBehaviour
     {
         score++;
         Debug.Log("Score: " + score);
-        OnScoreUpdated?.Invoke();
+        OnScoreUpdated?.Invoke(score);
 
         if (score > highScore)
         {
             highScore = score;
-            OnHighScoreUpdated?.Invoke();
+            OnHighScoreUpdated?.Invoke(highScore);
             SaveHighScore();
         }
     }
