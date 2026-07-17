@@ -13,38 +13,39 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         if (isSubscribedToEvents == false)
-        {
-            SubScribeToEvents();
-            isSubscribedToEvents = true;
-        }
+            SubscribeToEvents();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        SubScribeToEvents();
+        SubscribeToEvents();
     }
 
     private void OnDisable()
     {
-        UnsubScribeToEvents();
+        UnsubscribeToEvents();
         isSubscribedToEvents = false;
     }
 
-    void SubScribeToEvents()
+    void SubscribeToEvents()
     {
         GameManager.GetInstance().GetPlayer().health.OnHealthUpdate += UpdateHealth;
 
         GameManager.GetInstance().GetScoreManager().OnScoreUpdated.AddListener(UpdateScore);
         GameManager.GetInstance().GetScoreManager().OnHighScoreUpdated.AddListener(UpdateHighScore);
+
+        isSubscribedToEvents = true;
     }
 
-    void UnsubScribeToEvents()
+    void UnsubscribeToEvents()
     {
         GameManager.GetInstance().GetPlayer().health.OnHealthUpdate -= UpdateHealth;
 
         GameManager.GetInstance().GetScoreManager().OnScoreUpdated.RemoveListener(UpdateScore);
         GameManager.GetInstance().GetScoreManager().OnHighScoreUpdated.RemoveListener(UpdateHighScore);
+
+        isSubscribedToEvents = false;
     }
 
     void UpdateHealth(float health)

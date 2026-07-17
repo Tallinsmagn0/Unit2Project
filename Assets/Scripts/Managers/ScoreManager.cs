@@ -6,28 +6,43 @@ public class ScoreManager : MonoBehaviour
     private int score;
     private int highScore;
 
+    private string highScoreKey = "HighScore";
+
     public UnityEvent<int> OnScoreUpdated;
     public UnityEvent<int> OnHighScoreUpdated;
 
+    private bool isInitialScoreLoaded = false;
+
     void Start()
     {
-        highScore = PlayerPrefs.GetInt("HighScore");
+        highScore = PlayerPrefs.GetInt(highScoreKey);
+    }
+
+    void Update()
+    {
+        if (!isInitialScoreLoaded)
+        {
+            OnScoreUpdated?.Invoke(score);
+            OnHighScoreUpdated?.Invoke(highScore);
+            isInitialScoreLoaded = true;
+        }
     }
 
     public int GetScore()
     {
+        OnScoreUpdated?.Invoke(score);
         return score;
     }
 
     public int GetHighScore()
     {
+        OnHighScoreUpdated?.Invoke(highScore);
         return highScore;
     }
 
     public void IncrementScore()
     {
         score++;
-        Debug.Log("Score: " + score);
         OnScoreUpdated?.Invoke(score);
 
         if (score > highScore)
@@ -40,6 +55,6 @@ public class ScoreManager : MonoBehaviour
 
     public void SaveHighScore()
     {
-        PlayerPrefs.SetInt("HighScore", highScore);
+        PlayerPrefs.SetInt(highScoreKey, highScore);
     }
 }
