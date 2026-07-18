@@ -138,9 +138,9 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.49612612, y: -0.29128718}
-      - {x: -0.006378114, y: 0.5944594}
-      - {x: -0.5130264, y: -0.29250216}
+    - - {x: 0.5006297, y: -0.28903538}
+      - {x: 0.000377357, y: 0.5786968}
+      - {x: -0.5017674, y: -0.29025036}
   m_UseDelaunayMesh: 1
 --- !u!1 &1159013410033598867
 GameObject:
@@ -224,7 +224,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 0, g: 0.8124628, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

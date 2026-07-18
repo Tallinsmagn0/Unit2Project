@@ -29,10 +29,11 @@ public class Player : PlayableObject
         playerRB.linearVelocity = direction * speed * Time.deltaTime;
 
         Vector3 playerScreenPos = camera.WorldToScreenPoint(transform.position);
+
         target.x -= playerScreenPos.x;
         target.y -= playerScreenPos.y;
 
-        float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg - 90;
         transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 

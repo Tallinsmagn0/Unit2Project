@@ -8,7 +8,7 @@ public class Weapon
     private float damage;
     private float bulletSpeed;
 
-    public Weapon(string _name, float _damage, float _bulletSpeed = 1000)
+    public Weapon(string _name, float _damage, float _bulletSpeed = 10)
     {
         name = _name;
         damage = _damage;
