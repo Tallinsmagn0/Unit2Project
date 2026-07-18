@@ -42,7 +42,12 @@ public class ScoreManager : MonoBehaviour
 
     public void IncrementScore()
     {
-        score++;
+        IncrementScore(1);
+    }
+
+    public void IncrementScore(int points)
+    {
+        score += points;
         OnScoreUpdated?.Invoke(score);
 
         if (score > highScore)

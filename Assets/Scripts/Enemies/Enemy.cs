@@ -6,6 +6,8 @@ public class Enemy : PlayableObject
     private EnemyType enemyType;
     protected Transform target;
 
+    protected int defeatScore = 10;
+
     protected virtual void Start()
     {
         try
@@ -72,6 +74,7 @@ public class Enemy : PlayableObject
     public override void Defeated()
     {
         Destroy(gameObject);
+        GameManager.GetInstance().GetScoreManager().IncrementScore(defeatScore);
     }
 
     public void SetEnemyType(EnemyType _enemyType)

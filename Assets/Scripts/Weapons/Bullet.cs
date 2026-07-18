@@ -39,7 +39,11 @@ public class Bullet : MonoBehaviour
         if (damageable != null)
         {
             damageable.GetDamage(damage);
-            AddScore();
+
+            if (targetTag == "Enemy")
+            {
+               AddScore(); 
+            }
             Destroy(gameObject);
         }
     }
