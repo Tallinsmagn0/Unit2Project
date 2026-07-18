@@ -5,8 +5,7 @@ public class Enemy : PlayableObject
 {
     private EnemyType enemyType;
     protected Transform target;
-
-    protected int defeatScore = 10;
+    [SerializeField] protected int defeatScore = 10;
 
     protected virtual void Start()
     {

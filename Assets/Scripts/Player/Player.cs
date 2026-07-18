@@ -26,7 +26,7 @@ public class Player : PlayableObject
 
     public void Move(Vector3 direction, Vector2 target)
     {
-        playerRB.linearVelocity = direction * speed * Time.deltaTime;
+        playerRB.linearVelocity = direction * speed;
 
         Vector3 playerScreenPos = camera.WorldToScreenPoint(transform.position);
 
