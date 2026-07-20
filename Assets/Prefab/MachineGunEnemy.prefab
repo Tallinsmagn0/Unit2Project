@@ -14,11 +14,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6366064485319912904, guid: ac0e0c451a95048a28195357d9f2600e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1.80272
       objectReference: {fileID: 0}
     - target: {fileID: 6366064485319912904, guid: ac0e0c451a95048a28195357d9f2600e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.94667
       objectReference: {fileID: 0}
     - target: {fileID: 6366064485319912904, guid: ac0e0c451a95048a28195357d9f2600e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -78,6 +78,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a447404f8af043f5935ff0ad93cc6e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MachineGunEnemy
-  speed: 4
-  shootingTime: 1
-  shootingCooldown: 1
+  speed: 2
+  attackDamage: 10
+  attackRange: 6
+  attackRate: 0.2
+  defeatScore: 10
+  bulletPrefab: {fileID: 922171902542695900, guid: 8ece3a7643f14474294185afd8542bfb, type: 3}
+  bulletSpeed: 7
+  shootingDuration: 7
+  shootingCooldown: 3
+  turnSpeed: 2

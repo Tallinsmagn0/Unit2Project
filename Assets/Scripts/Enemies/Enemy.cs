@@ -43,7 +43,6 @@ public class Enemy : PlayableObject
         } else
         {
             speed = targetSpeed;
-            timer = 0;
         }
         Move(target.position);
     }

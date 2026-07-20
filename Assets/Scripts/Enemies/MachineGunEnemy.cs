@@ -6,7 +6,9 @@ public class MachineGunEnemy : Enemy
     [SerializeField] private float bulletSpeed;
     [SerializeField] private float shootingDuration;
     [SerializeField] private float shootingCooldown;
-     [SerializeField] private float turnSpeed;
+    [SerializeField] private float turnSpeed;
+
+    private bool isInCooldown = true;
 
     new private void Start()
     {
@@ -16,13 +18,33 @@ public class MachineGunEnemy : Enemy
 
     public override void Attack()
     {
-        if (timer <= attackRate)
+        if (isInCooldown)
         {
-            timer += Time.deltaTime;
-        } else
+            if (timer <= shootingCooldown)
+            {
+                timer += Time.deltaTime;
+            } 
+            else
+            {
+                timer = 0;
+                isInCooldown = false;
+            }
+        }
+        else
         {
-            timer = 0;
-            Shoot();
+            if (timer <= shootingDuration)
+            {
+                if (timer % attackRate > (timer + Time.deltaTime) % attackRate)
+                {
+                    Shoot();
+                }
+                timer += Time.deltaTime;
+            } 
+            else
+            {
+                timer = 0;
+                isInCooldown = true;
+            }
         }
     }
 
