@@ -4,9 +4,9 @@ public class PopupEnemy : Enemy
 {
     public string scamMessage;
 
-    public override void Attack()
+    protected override void StartAttack()
     {
-        base.Attack();
+        base.StartAttack();
         Scam();
     }
 

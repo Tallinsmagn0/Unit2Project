@@ -79,12 +79,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MachineGunEnemy
   speed: 2
-  attackDamage: 10
-  attackRange: 6
-  attackRate: 0.2
+  attackDamage: 5
+  attackRange: 7
+  attackRate: 0.1
   defeatScore: 10
   bulletPrefab: {fileID: 922171902542695900, guid: 8ece3a7643f14474294185afd8542bfb, type: 3}
   bulletSpeed: 7
   shootingDuration: 7
   shootingCooldown: 3
-  turnSpeed: 2
+  turnSpeed: 3

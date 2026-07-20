@@ -16,7 +16,7 @@ public class MachineGunEnemy : Enemy
         weapon = new Weapon("Machine Gun", attackDamage, bulletSpeed);
     }
 
-    public override void Attack()
+    protected override void Attack()
     {
         if (isInCooldown)
         {

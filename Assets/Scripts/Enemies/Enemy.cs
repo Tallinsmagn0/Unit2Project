@@ -12,6 +12,7 @@ public class Enemy : PlayableObject
 
     protected float targetSpeed;
     protected float timer = 0;
+    protected bool isAttacking;
 
     protected virtual void Start()
     {
@@ -39,10 +40,16 @@ public class Enemy : PlayableObject
         if (distance <= attackRange)
         {
             speed = 0;
-            Attack();
+            StartAttack();
         } else
         {
             speed = targetSpeed;
+            StopAttack();
+        }
+
+        if (isAttacking)
+        {
+            Attack();
         }
         Move(target.position);
     }
@@ -64,9 +71,19 @@ public class Enemy : PlayableObject
 
     public override void Shoot() { }
 
-    public virtual void Attack()
+    protected virtual void StartAttack()
     {
-        Debug.Log($"Enemy attacking.");
+        isAttacking = true;
+    }
+
+    protected virtual void StopAttack()
+    {
+        isAttacking = false;
+    }
+
+    protected virtual void Attack()
+    {
+        Debug.Log("Enemy is attacking");
     }
 
     public override void Defeated()

@@ -7,7 +7,7 @@ public class MeleeEnemy : Enemy
         base.Start();
     }
 
-    public override void Attack()
+    protected override void Attack()
     {
         if (timer <= attackRate)
         {
