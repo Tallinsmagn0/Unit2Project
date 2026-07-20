@@ -18,7 +18,6 @@ public class Enemy : PlayableObject
             Debug.Log("There is no player in the scene! Goodbye!");
             Destroy(gameObject);
         }
-        health = new Health(100);
     }
 
     protected virtual void Update()

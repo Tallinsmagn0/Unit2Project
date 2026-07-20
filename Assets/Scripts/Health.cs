@@ -45,6 +45,11 @@ public class Health
         return currentHealth;
     }
 
+    public void SetRegenRate(float _healthRegenRate)
+    {
+        this.healthRegenRate = _healthRegenRate;
+    }
+
     public void SetHealth(float health)
     {
         if (health < 0 || health > maxHealth)

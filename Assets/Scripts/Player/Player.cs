@@ -13,7 +13,7 @@ public class Player : PlayableObject
     public override void Awake()
     {
         base.Awake();
-        health = new Health(100, 0.5f, 100);
+        health.SetRegenRate(0.5f);
         weapon = new Weapon("Player Weapon", weaponDamage, bulletSpeed);
     }
 

@@ -13,6 +13,7 @@ public abstract class PlayableObject : MonoBehaviour, IDamageable
     public virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        health = new Health(100);
     }
 
     public abstract void GetDamage(float damage);
