@@ -2,5 +2,9 @@ using UnityEngine;
 
 public class ExploderEnemy : Enemy
 {
-    public float explodeRange;
+    protected override void Attack()
+    {
+        target.GetComponent<IDamageable>().GetDamage(attackDamage);
+        Defeated();
+    }
 }

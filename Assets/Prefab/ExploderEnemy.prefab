@@ -8,17 +8,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4031759126554446407, guid: ac0e0c451a95048a28195357d9f2600e, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5901860170054215926, guid: ac0e0c451a95048a28195357d9f2600e, type: 3}
       propertyPath: m_Name
       value: ExploderEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 6366064485319912904, guid: ac0e0c451a95048a28195357d9f2600e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 2.83
       objectReference: {fileID: 0}
     - target: {fileID: 6366064485319912904, guid: ac0e0c451a95048a28195357d9f2600e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.42
       objectReference: {fileID: 0}
     - target: {fileID: 6366064485319912904, guid: ac0e0c451a95048a28195357d9f2600e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -78,5 +82,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd48a989b7de140b5aff1efc4ba187f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExploderEnemy
-  speed: 5
-  explodeRange: 10
+  speed: 1.5
+  attackDamage: 40
+  attackRange: 0.5
+  attackRate: 0
+  defeatScore: 10
