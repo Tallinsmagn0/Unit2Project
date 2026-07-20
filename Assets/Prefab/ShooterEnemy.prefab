@@ -214,6 +214,7 @@ MonoBehaviour:
   attackRange: 7
   attackRate: 2.5
   defeatScore: 10
+  explosionFragmentPrefab: {fileID: 6190283598460161463, guid: 7c7bb5e310c0942388c3213522ed62d6, type: 3}
   bulletPrefab: {fileID: 922171902542695900, guid: 8ece3a7643f14474294185afd8542bfb, type: 3}
   laserPointer: {fileID: 1246689223128408692}
   bulletSpeed: 12

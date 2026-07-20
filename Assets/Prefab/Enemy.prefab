@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5028204934158391785}
   - component: {fileID: 3688118115197196007}
   - component: {fileID: 4031759126554446407}
+  - component: {fileID: 1841474599979847514}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -48,6 +49,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   speed: 5
+  attackDamage: 10
+  attackRange: 5
+  attackRate: 2
+  defeatScore: 10
+  explosionFragmentPrefab: {fileID: 6190283598460161463, guid: 7c7bb5e310c0942388c3213522ed62d6, type: 3}
 --- !u!50 &3688118115197196007
 Rigidbody2D:
   serializedVersion: 5
@@ -121,6 +127,28 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!95 &1841474599979847514
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5901860170054215926}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9f7cba2346dfb4c7495eb4134ba35985, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8049339279456489943
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public class Enemy : PlayableObject
     [SerializeField] protected float attackRange = 5;
     [SerializeField] protected float attackRate = 2f;
     [SerializeField] protected int defeatScore = 10;
+    [SerializeField] ExplosionFragment explosionFragmentPrefab;
 
     protected float targetSpeed;
     protected float timer = 0;
@@ -88,8 +89,18 @@ public class Enemy : PlayableObject
 
     public override void Defeated()
     {
+        Explode();
         Destroy(gameObject);
         GameManager.GetInstance().GetScoreManager().IncrementScore(defeatScore);
+    }
+
+    protected virtual void Explode()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            ExplosionFragment fragment = GameObject.Instantiate(explosionFragmentPrefab, transform.position, Quaternion.identity);
+            fragment.SetMoveDirection(new Vector2(i < 2 ? 1 : -1, i % 2 == 0 ? 1 : -1));
+        }
     }
 
     public void SetEnemyType(EnemyType _enemyType)

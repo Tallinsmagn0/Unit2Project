@@ -83,7 +83,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeEnemy
   speed: 2
-  attackRange: 2.5
-  attackTime: 1.5
-  defeatScore: 10
   attackDamage: 15
+  attackRange: 2.5
+  attackRate: 2
+  defeatScore: 10
+  explosionFragmentPrefab: {fileID: 6190283598460161463, guid: 7c7bb5e310c0942388c3213522ed62d6, type: 3}
