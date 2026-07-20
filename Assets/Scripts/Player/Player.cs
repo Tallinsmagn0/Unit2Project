@@ -37,7 +37,7 @@ public class Player : PlayableObject
 
     public override void Shoot()
     {
-        weapon.Shoot(bulletPrefab, this, "Enemy", 5);
+        weapon.Shoot(bulletPrefab, this, "Enemy");
     }
 
     public override void GetDamage(float damage)

@@ -12,13 +12,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: MeleeEnemy
       objectReference: {fileID: 0}
-    - target: {fileID: 6366064485319912904, guid: ac0e0c451a95048a28195357d9f2600e, type: 3}
-      propertyPath: m_LocalPosition.x
+    - target: {fileID: 5901860170054215926, guid: ac0e0c451a95048a28195357d9f2600e, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6366064485319912904, guid: ac0e0c451a95048a28195357d9f2600e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.80272
+      objectReference: {fileID: 0}
+    - target: {fileID: 6366064485319912904, guid: ac0e0c451a95048a28195357d9f2600e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.94667
       objectReference: {fileID: 0}
     - target: {fileID: 6366064485319912904, guid: ac0e0c451a95048a28195357d9f2600e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -78,5 +82,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84c92f33f23c44ae5a0049c9ef6e1d1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeEnemy
-  speed: 6
-  attackRange: 10
+  speed: 2
+  attackRange: 2.5
+  attackTime: 1.5
+  defeatScore: 10
+  attackDamage: 15

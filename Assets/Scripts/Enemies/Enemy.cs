@@ -5,7 +5,13 @@ public class Enemy : PlayableObject
 {
     private EnemyType enemyType;
     protected Transform target;
+    [SerializeField] protected float attackDamage = 10f;
+    [SerializeField] protected float attackRange = 5;
+    [SerializeField] protected float attackRate = 2f;
     [SerializeField] protected int defeatScore = 10;
+
+    protected float targetSpeed;
+    protected float timer = 0;
 
     protected virtual void Start()
     {
@@ -18,17 +24,28 @@ public class Enemy : PlayableObject
             Debug.Log("There is no player in the scene! Goodbye!");
             Destroy(gameObject);
         }
+        targetSpeed = speed;
     }
 
     protected virtual void Update()
     {
-        if (target != null)
+        if (target == null)
         {
-            Move(target.position);
+            return;
+        }
+
+        float distance = Vector2.Distance(transform.position, target.position);
+
+        if (distance <= attackRange)
+        {
+            speed = 0;
+            Attack();
         } else
         {
-            Move();
+            speed = targetSpeed;
+            timer = 0;
         }
+        Move(target.position);
     }
 
     public void Move()
@@ -36,25 +53,14 @@ public class Enemy : PlayableObject
         transform.Translate(Vector2.right * speed * Time.deltaTime);
     }
 
-    public virtual void Move(Vector2 direction)
+    public override void Move(Vector2 direction)
     {
         direction.x -= transform.position.x;
         direction.y -= transform.position.y;
 
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90; 
         transform.rotation = Quaternion.Euler(0, 0, angle);
-        transform.Translate(Vector2.right * speed * Time.deltaTime);
-    }
-
-    public void Move(Transform target)
-    {
-        transform.LookAt(target.position);
-        transform.Translate(Vector2.right * speed * Time.deltaTime);
-    }
-
-    public void Move(float _speed)
-    {
-        transform.Translate(Vector2.right * _speed * Time.deltaTime);
+        rb.linearVelocity = direction.normalized * speed;
     }
 
     public override void Shoot() { }
@@ -62,11 +68,6 @@ public class Enemy : PlayableObject
     public virtual void Attack()
     {
         Debug.Log($"Enemy attacking.");
-    }
-
-    public virtual void Attack(float interval)
-    {
-        Debug.Log($"Enemy attacking with interval {interval}");
     }
 
     public override void Defeated()

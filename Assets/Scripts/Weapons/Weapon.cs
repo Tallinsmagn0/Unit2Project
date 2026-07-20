@@ -21,11 +21,11 @@ public class Weapon
         weaponCount++;
     }
 
-    public void Shoot(Bullet _bullet, PlayableObject _shooter, string _targetTag, float _bulletLifetime)
+    public void Shoot(Bullet _bullet, PlayableObject _shooter, string _targetTag)
     {
         Bullet bullet = GameObject.Instantiate(_bullet, _shooter.transform.position, _shooter.transform.rotation);
         bullet.SetBullet(damage, _targetTag, bulletSpeed);
-        GameObject.Destroy(bullet.gameObject, _bulletLifetime);
+        GameObject.Destroy(bullet.gameObject, GameManager.GetInstance().GetBulletLifetime());
     }
 
     public float GetDamage()

@@ -20,8 +20,6 @@ public abstract class PlayableObject : MonoBehaviour, IDamageable
 
     public virtual void Move(Vector2 direction) {}
 
-    public virtual void Move(Vector3 direction, float speed) {}
-
     public abstract void Shoot();
 
     public abstract void Defeated();

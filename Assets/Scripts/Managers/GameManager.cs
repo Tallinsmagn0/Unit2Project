@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     // ------ End Singleton Setup ------
 
     [SerializeField] private ScoreManager scoreManager;
+    [SerializeField] private float bulletLifetime;
     private Player player;
 
     void Awake()
@@ -49,5 +50,10 @@ public class GameManager : MonoBehaviour
     public ScoreManager GetScoreManager()
     {
         return scoreManager;
+    }
+
+    public float GetBulletLifetime()
+    {
+        return bulletLifetime;
     }
 }
