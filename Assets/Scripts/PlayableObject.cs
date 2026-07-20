@@ -6,22 +6,20 @@ using UnityEngine;
 public abstract class PlayableObject : MonoBehaviour, IDamageable
 {
     public Health health = new Health();
-
     public Weapon weapon;
-
     [SerializeField]  protected float speed;
+    protected Rigidbody2D rb;
+
+    public virtual void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     public abstract void GetDamage(float damage);
 
-    public virtual void Move(Vector2 direction)
-    {
-        
-    }
+    public virtual void Move(Vector2 direction) {}
 
-    public virtual void Move(Vector3 direction, float speed)
-    {
-        
-    }
+    public virtual void Move(Vector3 direction, float speed) {}
 
     public abstract void Shoot();
 

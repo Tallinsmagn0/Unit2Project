@@ -10,12 +10,10 @@ public class Player : PlayableObject
     [SerializeField] private float bulletSpeed = 10;
     [SerializeField] private Bullet bulletPrefab;
 
-    private Rigidbody2D playerRB;
-
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         health = new Health(100, 0.5f, 100);
-        playerRB = GetComponent<Rigidbody2D>();
         weapon = new Weapon("Player Weapon", weaponDamage, bulletSpeed);
     }
 
@@ -26,7 +24,7 @@ public class Player : PlayableObject
 
     public void Move(Vector3 direction, Vector2 target)
     {
-        playerRB.linearVelocity = direction * speed;
+        rb.linearVelocity = direction * speed;
 
         Vector3 playerScreenPos = camera.WorldToScreenPoint(transform.position);
 

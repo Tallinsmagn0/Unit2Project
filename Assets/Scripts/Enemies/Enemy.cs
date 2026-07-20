@@ -37,7 +37,7 @@ public class Enemy : PlayableObject
         transform.Translate(Vector2.right * speed * Time.deltaTime);
     }
 
-    public void Move(Vector2 direction)
+    public virtual void Move(Vector2 direction)
     {
         direction.x -= transform.position.x;
         direction.y -= transform.position.y;
