@@ -4,7 +4,7 @@ public enum EnemyType
     Exploder,
     Shooter,
     MachineGun,
-    PopupEnemy
+    Popup
 }
 
 public enum BossPhase
