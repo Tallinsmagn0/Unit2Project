@@ -3,12 +3,14 @@ using UnityEngine;
 public class ShooterEnemy : Enemy
 {
     [SerializeField] private Bullet bulletPrefab;
-    [SerializeField] private GameObject laserPointer;
     [SerializeField] private float bulletSpeed;
+
+    private LineRenderer lineRenderer;
 
     new private void Start()
     {
         base.Start();
+        lineRenderer = GetComponent<LineRenderer>();
         weapon = new Weapon("Shooter", attackDamage, bulletSpeed);
     }
 
@@ -20,21 +22,24 @@ public class ShooterEnemy : Enemy
 
     private void StretchLaserToTarget()
     {
-        float laserLength = (target.position - transform.position).magnitude;
-        Vector3 laserScale = laserPointer.transform.localScale;
-        laserPointer.transform.localScale = new Vector3(laserScale.x, laserLength, laserScale.z);
+        if (lineRenderer.enabled)
+        {
+            float lineRendererZPos = lineRenderer.GetPosition(0).z;
+            lineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y, lineRendererZPos));
+            lineRenderer.SetPosition(1, new Vector3(target.transform.position.x, target.transform.position.y, lineRendererZPos));
+        }
     }
 
     protected override void StartAttack()
     {
         base.StartAttack();
-        laserPointer.SetActive(true);
+        lineRenderer.enabled = true;
     }
 
     protected override void StopAttack()
     {
         base.StopAttack();
-        laserPointer.SetActive(false);
+        lineRenderer.enabled = false;
     }
 
     protected override void Attack()
