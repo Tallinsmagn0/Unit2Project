@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     {
 
         ResetTimer();
-        // SpawnEnemy();
+        SpawnEnemy();
     }
 
     // Update is called once per frame
@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
             AdvanceTimer();
         } else
         {
-            // SpawnEnemy();
+            SpawnEnemy();
             ResetTimer();
         }
     }
