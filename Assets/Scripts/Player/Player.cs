@@ -2,19 +2,19 @@ using UnityEngine;
 
 public class Player : PlayableObject
 {
-    // Object references
-    [SerializeField] private Camera camera;
-
     // Attack variables
     [SerializeField] private float weaponDamage = 10;
     [SerializeField] private float bulletSpeed = 10;
     [SerializeField] private Bullet bulletPrefab;
+
+    private Camera camera;
 
     public override void Awake()
     {
         base.Awake();
         health.SetRegenRate(0.5f);
         weapon = new Weapon("Player Weapon", weaponDamage, bulletSpeed);
+        camera = Camera.main;
     }
 
     void Update()
@@ -52,6 +52,7 @@ public class Player : PlayableObject
 
     public override void Defeated()
     {
+        base.Defeated();
         Destroy(gameObject);
     }
 }

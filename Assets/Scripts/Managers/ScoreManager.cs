@@ -40,6 +40,12 @@ public class ScoreManager : MonoBehaviour
         return highScore;
     }
 
+    public void ResetScore()
+    {
+        score = 0;
+        OnScoreUpdated?.Invoke(score);
+    }
+
     public void IncrementScore()
     {
         IncrementScore(1);

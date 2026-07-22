@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// PlayableObject type for game playable objects like player or enemies
@@ -9,6 +10,8 @@ public abstract class PlayableObject : MonoBehaviour, IDamageable
     public Weapon weapon;
     [SerializeField]  protected float speed;
     protected Rigidbody2D rb;
+
+    public UnityEvent OnDefeated;
 
     public virtual void Awake()
     {
@@ -22,7 +25,10 @@ public abstract class PlayableObject : MonoBehaviour, IDamageable
 
     public abstract void Shoot();
 
-    public abstract void Defeated();
+    public virtual void Defeated()
+    {
+        OnDefeated?.Invoke();
+    }
 
 
 }

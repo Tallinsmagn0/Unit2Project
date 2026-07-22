@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using UnityEngine.Events;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,44 +25,44 @@ public class GameManager : MonoBehaviour
 
     // ------ End Singleton Setup ------
 
-    [SerializeField] private ScoreManager scoreManager;
+    [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject exploderEnemyPrefab;
     [SerializeField] private GameObject MachineGunEnemyPrefab;
     [SerializeField] private GameObject meleeEnemyPrefab;
     [SerializeField] private GameObject shooterEnemyPrefab;
-    [SerializeField] private float bulletLifetime;
-    [SerializeField] private float spawnInterval;
-    [SerializeField] private float spawnRadius = 10f;
 
     private Player player;
     private Dictionary<EnemyType, GameObject> enemyTypeToPrefab = new Dictionary<EnemyType, GameObject>();
-    private float spawnTimer;
+
+    // Actions
+    public UnityEvent OnGameStart;
+    public UnityEvent OnGameEnd;
+
+    // References
+    [SerializeField] private ScoreManager scoreManager;
+    [SerializeField] private PickupSpawner pickupSpawner;
+
+    // Game data
+    [SerializeField] private float bulletLifetime;
+    [SerializeField] private float enemySpawnRate = 7f;
+    [SerializeField] private float spawnRadius = 10f;
+
+    // Game State
+    bool isGameInProgress = false;
+    bool shouldEnemiesSpawn = false;
+
+    /*
+    TODO
+    main menu
+    game over screen
+    event for game start and stop
+    a way to clean up the game when it's over
+    */
 
     void Awake()
     {
         SetSingleton();
-        FindPlayer();
         SetEnemyPrefabDictionary();
-    }
-
-    void Start()
-    {
-
-        ResetTimer();
-        SpawnEnemy();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (spawnTimer < spawnInterval)
-        {
-            AdvanceTimer();
-        } else
-        {
-            SpawnEnemy();
-            ResetTimer();
-        }
     }
 
     void SetEnemyPrefabDictionary()
@@ -79,6 +81,57 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void StartGame()
+    {
+        isGameInProgress = true;
+        scoreManager.ResetScore();
+        player = Instantiate(playerPrefab).GetComponent<Player>();
+        player.OnDefeated.AddListener(StopGame);
+        OnGameStart?.Invoke();
+        StartCoroutine(GameStartRoutine());
+    }
+
+    public void StopGame()
+    {
+        scoreManager.SaveHighScore();
+        OnGameEnd?.Invoke();
+        shouldEnemiesSpawn = false;
+        StartCoroutine(GameStopRoutine());
+    }
+
+    private IEnumerator GameStartRoutine()
+    {
+        yield return new WaitForSeconds(1.0f);
+        shouldEnemiesSpawn = true;
+        SpawnEnemy();
+        StartCoroutine(EnemySpawnRoutine());
+        
+    }
+
+    private IEnumerator GameStopRoutine()
+    {
+        yield return new WaitForSeconds(0.2f);
+        isGameInProgress = false;
+
+        foreach (Enemy enemy in FindObjectsByType<Enemy>(FindObjectsSortMode.None))
+        {
+            Destroy(enemy.gameObject);
+        }
+        foreach (Pickup pickup in FindObjectsByType<Pickup>(FindObjectsSortMode.None))
+        {
+            Destroy(pickup.gameObject);
+        }
+    }
+
+    private IEnumerator EnemySpawnRoutine()
+    {
+        while (shouldEnemiesSpawn)
+        {
+            yield return new WaitForSeconds(enemySpawnRate);
+            SpawnEnemy();
+        }
+    }
+
     void SpawnEnemy()
     {
         int randomEnemyIndex = Random.Range(0, enemyTypeToPrefab.Count);
@@ -87,24 +140,14 @@ public class GameManager : MonoBehaviour
         Instantiate(randomEnemyPrefab, spawnPosition, Quaternion.identity);
     }
 
-    void ResetTimer()
+    public void OnEnemyDefeated(Enemy enemy)
     {
-        spawnTimer = 0;
-    }
-
-    void AdvanceTimer()
-    {
-        spawnTimer += Time.deltaTime;
+        pickupSpawner.SpawnPickup(enemy.transform.position);
     }
 
     public Player GetPlayer()
     {
         return player;
-    }
-
-    private void FindPlayer()
-    {
-        player = FindFirstObjectByType<Player>();
     }
 
     public ScoreManager GetScoreManager()
@@ -115,5 +158,15 @@ public class GameManager : MonoBehaviour
     public float GetBulletLifetime()
     {
         return bulletLifetime;
+    }
+
+    public bool IsGameInProgress()
+    {
+        return isGameInProgress;
+    }
+
+    public bool ShouldEnemiesSpawn()
+    {
+        return shouldEnemiesSpawn;
     }
 }

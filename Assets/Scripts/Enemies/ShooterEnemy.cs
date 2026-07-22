@@ -16,6 +16,10 @@ public class ShooterEnemy : Enemy
 
     protected override void Update()
     {
+        if (target == null)
+        {
+            return;
+        }
         base.Update();
         StretchLaserToTarget();
     }

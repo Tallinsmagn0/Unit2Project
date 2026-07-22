@@ -21,7 +21,7 @@ public class Enemy : PlayableObject
         {
             target = GameManager.GetInstance().GetPlayer().transform;
         }
-        catch (NullReferenceException e)
+        catch (Exception e)
         {
             Debug.Log("There is no player in the scene! Goodbye!");
             Destroy(gameObject);
@@ -92,6 +92,7 @@ public class Enemy : PlayableObject
         Explode();
         Destroy(gameObject);
         GameManager.GetInstance().GetScoreManager().IncrementScore(defeatScore);
+        GameManager.GetInstance().OnEnemyDefeated(this);
     }
 
     protected virtual void Explode()
@@ -111,8 +112,6 @@ public class Enemy : PlayableObject
     public override void GetDamage(float damage)
     {
         health.DeductHealth(damage);
-
-        Debug.Log("Enemy health: " + health.GetHealth());
 
         if (health.GetHealth() == 0)
         {
