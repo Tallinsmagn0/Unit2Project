@@ -55,6 +55,7 @@ MonoBehaviour:
   weaponDamage: 20
   bulletSpeed: 10
   bulletPrefab: {fileID: 922171902542695900, guid: 8ece3a7643f14474294185afd8542bfb, type: 3}
+  maxShootRate: 0.05
 --- !u!114 &54726437512371365
 MonoBehaviour:
   m_ObjectHideFlags: 0

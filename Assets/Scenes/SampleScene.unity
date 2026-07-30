@@ -1050,11 +1050,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickupSpawner
   pickups:
-  - pickup: {fileID: 0}
+  - pickup: {fileID: 4263971216824109267, guid: 62b477cb54d744300a4a495fa58f779a, type: 3}
     spawnWeight: 5
-  - pickup: {fileID: 0}
-    spawnWeight: 10
-  pickupProbability: 0
+  - pickup: {fileID: 6602132389807104513, guid: d11866b81f86545ca8b28d8a62af4dcb, type: 3}
+    spawnWeight: 0
+  pickupProbability: 1
 --- !u!4 &872089615
 Transform:
   m_ObjectHideFlags: 0

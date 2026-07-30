@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Player : PlayableObject
 {
@@ -8,6 +9,16 @@ public class Player : PlayableObject
     [SerializeField] private Bullet bulletPrefab;
 
     private Camera camera;
+
+    // PowerUp variables
+    private bool hasGunPowerUp = false;
+    private float powerUpTimer = 0;
+    private float powerUpShootRate;
+    private float maxPowerUpTime;
+
+    private Coroutine shootPowerUpCoroutine;
+
+
 
     public override void Awake()
     {
@@ -20,6 +31,7 @@ public class Player : PlayableObject
     void Update()
     {
         health.RegenHealth();
+        AdvancePowerUpTimer();
     }
 
     public void Move(Vector3 direction, Vector2 target)
@@ -40,6 +52,33 @@ public class Player : PlayableObject
         weapon.Shoot(bulletPrefab, this, "Enemy");
     }
 
+    public void StartShootCoroutine()
+    {
+        if (shootPowerUpCoroutine != null)
+        {
+            StopCoroutine(shootPowerUpCoroutine);
+        }
+        shootPowerUpCoroutine = StartCoroutine(ShootPowerUpCorountine());
+    }
+
+    public void StopShootCoroutine()
+    {
+        if (shootPowerUpCoroutine != null)
+        {
+            StopCoroutine(shootPowerUpCoroutine);
+            shootPowerUpCoroutine = null;
+        }
+    }
+
+    public IEnumerator ShootPowerUpCorountine()
+    {
+        while (hasGunPowerUp)
+        {
+            yield return new WaitForSeconds(powerUpShootRate);
+            Shoot();
+        }
+    }
+
     public override void GetDamage(float damage)
     {
         health.DeductHealth(damage);
@@ -54,5 +93,48 @@ public class Player : PlayableObject
     {
         base.Defeated();
         Destroy(gameObject);
+    }
+
+    void AdvancePowerUpTimer()
+    {
+        if (hasGunPowerUp)
+        {
+            powerUpTimer += Time.deltaTime;
+
+            if (powerUpTimer >= maxPowerUpTime)
+            {
+                PowerDownWeapon();
+            }
+        }
+    }
+
+    public void PowerUpWeapon(float duration, float shootRate)
+    {
+        hasGunPowerUp = true;
+        powerUpTimer = 0;
+        maxPowerUpTime = duration;
+        powerUpShootRate = shootRate;
+    }
+
+    public void PowerDownWeapon()
+    {
+        hasGunPowerUp = false;
+        powerUpTimer = 0;
+        StopShootCoroutine();
+    }
+
+    public bool HasGunPowerUp()
+    {
+        return hasGunPowerUp;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Check if the object entering has the "Player" tag
+        if (collision.CompareTag("Pickup"))
+        {
+            Pickup pickup = collision.gameObject.GetComponent<Pickup>();
+            pickup.OnPicked();
+        }
     }
 }

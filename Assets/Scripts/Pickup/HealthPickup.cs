@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HealthPickup : Pickup, IDamageable
+public class HealthPickup : Pickup
 {
 
     [SerializeField] private float healthMin = 25;
@@ -14,10 +14,5 @@ public class HealthPickup : Pickup, IDamageable
         Player player = GameManager.GetInstance().GetPlayer();
 
         player.health.AddHealth(health);
-    }
-
-    public void GetDamage(float damage)
-    {
-        base.OnPicked();
     }
 }

@@ -55,7 +55,7 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.CompareTag(targetTag))
+        if (collider.gameObject.CompareTag(targetTag) || collider.gameObject.CompareTag("Pickup"))
         {
             IDamageable damageable = collider.GetComponent<IDamageable>();
             Damage(damageable);
