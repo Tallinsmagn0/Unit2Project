@@ -10,19 +10,23 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text healthText;
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text highScoreText;
+    [SerializeField] private TMP_Text gunPowerUpTimerText;
 
-    bool isSubscribedToEvents = false;
+    bool isSubscribedToGameEvents = false;
+    bool isSubscribedToPlayerEvents = false;
+
+    Vector2 gunPowerUpSpacing = new Vector2(0f, 40f);
 
     private void OnEnable()
     {
-        if (isSubscribedToEvents == false)
-            SubscribeToEvents();
+        if (isSubscribedToGameEvents == false)
+            SubscribeToGameEvents();
     }
 
     private void OnDisable()
     {
-        UnsubscribeToEvents();
-        isSubscribedToEvents = false;
+        UnsubscribeToAllEvents();
+        isSubscribedToGameEvents = false;
     }
 
     private void OnGameStart()
@@ -40,13 +44,13 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.GetInstance().GetPlayer() != null)
+        if (!isSubscribedToPlayerEvents && GameManager.GetInstance().GetPlayer() != null)
         {
-            SubscribePlayerHealth();
+            SubscribeToPlayerEvents();
         }
     }
 
-    void SubscribeToEvents()
+    void SubscribeToGameEvents()
     {
         GameManager.GetInstance().GetScoreManager().OnScoreUpdated.AddListener(UpdateScore);
         GameManager.GetInstance().GetScoreManager().OnHighScoreUpdated.AddListener(UpdateHighScore);
@@ -54,12 +58,13 @@ public class UIManager : MonoBehaviour
         GameManager.GetInstance().OnGameStart.AddListener(OnGameStart);
         GameManager.GetInstance().OnGameEnd.AddListener(OnGameEnd);
 
-        isSubscribedToEvents = true;
+        isSubscribedToGameEvents = true;
     }
 
-    void UnsubscribeToEvents()
+    void UnsubscribeToAllEvents()
     {
         GameManager.GetInstance().GetPlayer().health.OnHealthUpdate -= UpdateHealth;
+        GameManager.GetInstance().GetPlayer().OnPowerUpTimerChange -= UpdateGunPowerUpTimerText;
 
         GameManager.GetInstance().GetScoreManager().OnScoreUpdated.RemoveListener(UpdateScore);
         GameManager.GetInstance().GetScoreManager().OnHighScoreUpdated.RemoveListener(UpdateHighScore);
@@ -67,12 +72,25 @@ public class UIManager : MonoBehaviour
         GameManager.GetInstance().OnGameStart.RemoveListener(OnGameStart);
         GameManager.GetInstance().OnGameEnd.RemoveListener(OnGameEnd);
 
-        isSubscribedToEvents = false;
+        isSubscribedToGameEvents = false;
+        isSubscribedToPlayerEvents = false;
+    }
+
+    public void SubscribeToPlayerEvents()
+    {
+        SubscribePlayerHealth();
+        SubscribePlayerPowerUpTimer();
+        isSubscribedToPlayerEvents = true;
     }
 
     public void SubscribePlayerHealth()
     {
         GameManager.GetInstance().GetPlayer().health.OnHealthUpdate += UpdateHealth;
+    }
+
+    public void SubscribePlayerPowerUpTimer()
+    {
+        GameManager.GetInstance().GetPlayer().OnPowerUpTimerChange += UpdateGunPowerUpTimerText;
     }
 
     void UpdateHealth(float health)
@@ -88,5 +106,21 @@ public class UIManager : MonoBehaviour
     void UpdateHighScore(int highScore)
     {
         highScoreText.text = $"High Score: {highScore}";
+    }
+
+    void UpdateGunPowerUpTimerText(bool isActive, float time, Vector2 position)
+    {
+        Debug.Log(gunPowerUpTimerText);
+
+        if (isActive)
+        {
+            gunPowerUpTimerText.gameObject.SetActive(true);
+            gunPowerUpTimerText.gameObject.transform.position = position + gunPowerUpSpacing;
+            gunPowerUpTimerText.text = time.ToString("0.0");
+        } 
+        else
+        {
+            gunPowerUpTimerText.gameObject.SetActive(false);
+        }
     }
 }

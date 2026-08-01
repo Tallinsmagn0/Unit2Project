@@ -81,7 +81,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8600c0e86bc84179b918c4f8b01b489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShooterEnemy
-  speed: 1
+  speed: 3
+  OnDefeated:
+    m_PersistentCalls:
+      m_Calls: []
   attackDamage: 25
   attackRange: 7
   attackRate: 2.5

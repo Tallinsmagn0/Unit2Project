@@ -82,7 +82,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd48a989b7de140b5aff1efc4ba187f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExploderEnemy
-  speed: 1.5
+  speed: 2
+  OnDefeated:
+    m_PersistentCalls:
+      m_Calls: []
   attackDamage: 40
   attackRange: 0.5
   attackRate: 0

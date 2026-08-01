@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections;
 
 public class Player : PlayableObject
@@ -7,6 +8,8 @@ public class Player : PlayableObject
     [SerializeField] private float weaponDamage = 10;
     [SerializeField] private float bulletSpeed = 10;
     [SerializeField] private Bullet bulletPrefab;
+
+    [SerializeField] private GameObject powerUpSymbol;
 
     private Camera camera;
 
@@ -18,7 +21,7 @@ public class Player : PlayableObject
 
     private Coroutine shootPowerUpCoroutine;
 
-
+    public Action<bool, float, Vector2> OnPowerUpTimerChange;
 
     public override void Awake()
     {
@@ -100,6 +103,7 @@ public class Player : PlayableObject
         if (hasGunPowerUp)
         {
             powerUpTimer += Time.deltaTime;
+            OnPowerUpTimerChange.Invoke(true, Mathf.Max(maxPowerUpTime - powerUpTimer, 0), camera.WorldToScreenPoint(transform.position));
 
             if (powerUpTimer >= maxPowerUpTime)
             {
@@ -114,12 +118,16 @@ public class Player : PlayableObject
         powerUpTimer = 0;
         maxPowerUpTime = duration;
         powerUpShootRate = shootRate;
+        powerUpSymbol.SetActive(true);
+        OnPowerUpTimerChange.Invoke(true, 0, camera.WorldToScreenPoint(transform.position));
     }
 
     public void PowerDownWeapon()
     {
         hasGunPowerUp = false;
         powerUpTimer = 0;
+        powerUpSymbol.SetActive(false);
+        OnPowerUpTimerChange.Invoke(false, 0, Vector2.zero);
         StopShootCoroutine();
     }
 
