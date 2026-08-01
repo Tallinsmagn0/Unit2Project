@@ -65,10 +65,7 @@ public class UIManager : MonoBehaviour
 
     void UnsubscribeToAllEvents()
     {
-        GameManager.GetInstance().GetPlayer().health.OnHealthUpdate -= UpdateHealth;
-        GameManager.GetInstance().GetPlayer().OnPowerUpTimerChange -= UpdateGunPowerUpTimerText;
-        GameManager.GetInstance().GetPlayer().OnCollectNuke -= IncrementNukeList;
-        GameManager.GetInstance().GetPlayer().OnUseNuke -= DecrementNukeList;
+        UnsubscribeToPlayerEvents();
 
         GameManager.GetInstance().GetScoreManager().OnScoreUpdated.RemoveListener(UpdateScore);
         GameManager.GetInstance().GetScoreManager().OnHighScoreUpdated.RemoveListener(UpdateHighScore);
@@ -77,7 +74,6 @@ public class UIManager : MonoBehaviour
         GameManager.GetInstance().OnGameEnd.RemoveListener(OnGameEnd);
 
         isSubscribedToGameEvents = false;
-        isSubscribedToPlayerEvents = false;
     }
 
     public void SubscribeToPlayerEvents()
@@ -85,7 +81,20 @@ public class UIManager : MonoBehaviour
         SubscribePlayerHealth();
         SubscribePlayerPowerUpTimer();
         SubscribePlayerNukeEvents();
+
         isSubscribedToPlayerEvents = true;
+    }
+
+    public void UnsubscribeToPlayerEvents()
+    {
+        if (GameManager.GetInstance().GetPlayer() != null)
+        {
+            GameManager.GetInstance().GetPlayer().health.OnHealthUpdate -= UpdateHealth;
+            GameManager.GetInstance().GetPlayer().OnPowerUpTimerChange -= UpdateGunPowerUpTimerText;
+            GameManager.GetInstance().GetPlayer().OnCollectNuke -= IncrementNukeList;
+            GameManager.GetInstance().GetPlayer().OnUseNuke -= DecrementNukeList;
+        }
+        isSubscribedToPlayerEvents = false;
     }
 
     public void SubscribePlayerHealth()
@@ -146,7 +155,7 @@ public class UIManager : MonoBehaviour
 
         if (lastNukeIndex >= 0)
         {
-            Destroy(nukePowerUpPanel.transform.GetChild(lastNukeIndex));
+            Destroy(nukePowerUpPanel.transform.GetChild(lastNukeIndex).gameObject);
         }
     }
 }

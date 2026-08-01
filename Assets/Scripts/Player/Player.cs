@@ -24,6 +24,7 @@ public class Player : PlayableObject
     public Action<bool, float, Vector2> OnPowerUpTimerChange;
 
     // Nuke Pickup variables
+    [SerializeField] private GameObject nukeBlastPrefab;
     [SerializeField] private int maxNumOfNukes;
     private int numOfNukes = 0;
 
@@ -158,6 +159,7 @@ public class Player : PlayableObject
         {
             numOfNukes--;
             OnUseNuke.Invoke();
+            Instantiate(nukeBlastPrefab, transform.position, Quaternion.identity);
         }
     }
 

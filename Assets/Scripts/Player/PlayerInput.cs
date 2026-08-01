@@ -9,6 +9,7 @@ public class PlayerInput : MonoBehaviour
     private float verticalInput;
     private Vector2 lookTarget;
     private bool shootInput;
+    private bool nukeInput;
     private bool startedShootingPowerUp;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -51,5 +52,8 @@ public class PlayerInput : MonoBehaviour
 
             if (shootInput) player.Shoot();
         }
+        nukeInput = Input.GetMouseButtonDown(1);
+
+        if (nukeInput) player.UseNukePickup();
     }
 }
