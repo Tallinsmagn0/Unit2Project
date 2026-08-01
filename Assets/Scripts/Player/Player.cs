@@ -159,13 +159,13 @@ public class Player : PlayableObject
         {
             numOfNukes--;
             OnUseNuke.Invoke();
-            Instantiate(nukeBlastPrefab, transform.position, Quaternion.identity);
+            Vector3 blastPosition = new Vector3(transform.position.x, transform.position.y, nukeBlastPrefab.transform.position.z);
+            Instantiate(nukeBlastPrefab, blastPosition, Quaternion.identity);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Check if the object entering has the "Player" tag
         if (collision.CompareTag("Pickup"))
         {
             Pickup pickup = collision.gameObject.GetComponent<Pickup>();
