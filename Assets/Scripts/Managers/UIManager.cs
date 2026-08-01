@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text highScoreText;
     [SerializeField] private TMP_Text gunPowerUpTimerText;
+    [SerializeField] private GameObject nukePowerUpPanel;
+    [SerializeField] private GameObject nukeSprite;
 
     bool isSubscribedToGameEvents = false;
     bool isSubscribedToPlayerEvents = false;
@@ -65,6 +67,8 @@ public class UIManager : MonoBehaviour
     {
         GameManager.GetInstance().GetPlayer().health.OnHealthUpdate -= UpdateHealth;
         GameManager.GetInstance().GetPlayer().OnPowerUpTimerChange -= UpdateGunPowerUpTimerText;
+        GameManager.GetInstance().GetPlayer().OnCollectNuke -= IncrementNukeList;
+        GameManager.GetInstance().GetPlayer().OnUseNuke -= DecrementNukeList;
 
         GameManager.GetInstance().GetScoreManager().OnScoreUpdated.RemoveListener(UpdateScore);
         GameManager.GetInstance().GetScoreManager().OnHighScoreUpdated.RemoveListener(UpdateHighScore);
@@ -80,6 +84,7 @@ public class UIManager : MonoBehaviour
     {
         SubscribePlayerHealth();
         SubscribePlayerPowerUpTimer();
+        SubscribePlayerNukeEvents();
         isSubscribedToPlayerEvents = true;
     }
 
@@ -91,6 +96,12 @@ public class UIManager : MonoBehaviour
     public void SubscribePlayerPowerUpTimer()
     {
         GameManager.GetInstance().GetPlayer().OnPowerUpTimerChange += UpdateGunPowerUpTimerText;
+    }
+
+    public void SubscribePlayerNukeEvents()
+    {
+        GameManager.GetInstance().GetPlayer().OnCollectNuke += IncrementNukeList;
+        GameManager.GetInstance().GetPlayer().OnUseNuke += DecrementNukeList;
     }
 
     void UpdateHealth(float health)
@@ -121,6 +132,21 @@ public class UIManager : MonoBehaviour
         else
         {
             gunPowerUpTimerText.gameObject.SetActive(false);
+        }
+    }
+
+    void IncrementNukeList()
+    {
+        Instantiate(nukeSprite, nukePowerUpPanel.transform);
+    }
+
+    void DecrementNukeList()
+    {
+        int lastNukeIndex = nukePowerUpPanel.transform.childCount - 1;
+
+        if (lastNukeIndex >= 0)
+        {
+            Destroy(nukePowerUpPanel.transform.GetChild(lastNukeIndex));
         }
     }
 }

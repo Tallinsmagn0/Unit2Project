@@ -13,7 +13,7 @@ public class Player : PlayableObject
 
     private Camera camera;
 
-    // PowerUp variables
+    // GunPowerUp variables
     private bool hasGunPowerUp = false;
     private float powerUpTimer = 0;
     private float powerUpShootRate;
@@ -22,6 +22,13 @@ public class Player : PlayableObject
     private Coroutine shootPowerUpCoroutine;
 
     public Action<bool, float, Vector2> OnPowerUpTimerChange;
+
+    // Nuke Pickup variables
+    [SerializeField] private int maxNumOfNukes;
+    private int numOfNukes = 0;
+
+    public Action OnCollectNuke;
+    public Action OnUseNuke;
 
     public override void Awake()
     {
@@ -134,6 +141,24 @@ public class Player : PlayableObject
     public bool HasGunPowerUp()
     {
         return hasGunPowerUp;
+    }
+
+    public void CollectNukePickup()
+    {
+        if (numOfNukes < maxNumOfNukes)
+        {
+            numOfNukes++;
+            OnCollectNuke.Invoke();
+        }
+    }
+
+    public void UseNukePickup()
+    {
+        if (numOfNukes > 0)
+        {
+            numOfNukes--;
+            OnUseNuke.Invoke();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
