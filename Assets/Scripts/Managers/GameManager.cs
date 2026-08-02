@@ -121,6 +121,10 @@ public class GameManager : MonoBehaviour
         {
             Destroy(pickup.gameObject);
         }
+        foreach (NukeBlast nukeBlast in FindObjectsByType<NukeBlast>(FindObjectsSortMode.None))
+        {
+            Destroy(nukeBlast.gameObject);
+        }
     }
 
     private IEnumerator EnemySpawnRoutine()

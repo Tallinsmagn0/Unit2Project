@@ -46,7 +46,7 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
-        if (!isSubscribedToPlayerEvents && GameManager.GetInstance().GetPlayer() != null)
+        if (!isSubscribedToPlayerEvents)
         {
             SubscribeToPlayerEvents();
         }
@@ -65,8 +65,6 @@ public class UIManager : MonoBehaviour
 
     void UnsubscribeToAllEvents()
     {
-        UnsubscribeToPlayerEvents();
-
         GameManager.GetInstance().GetScoreManager().OnScoreUpdated.RemoveListener(UpdateScore);
         GameManager.GetInstance().GetScoreManager().OnHighScoreUpdated.RemoveListener(UpdateHighScore);
 
@@ -78,11 +76,17 @@ public class UIManager : MonoBehaviour
 
     public void SubscribeToPlayerEvents()
     {
-        SubscribePlayerHealth();
-        SubscribePlayerPowerUpTimer();
-        SubscribePlayerNukeEvents();
+        if (GameManager.GetInstance().GetPlayer() != null)
+        {
+            Debug.Log("Subscribing to player events");
 
-        isSubscribedToPlayerEvents = true;
+            SubscribePlayerHealth();
+            SubscribePlayerPowerUpTimer();
+            SubscribePlayerNukeEvents();
+            GameManager.GetInstance().GetPlayer().OnDefeated.AddListener(UnsubscribeToPlayerEvents);
+
+            isSubscribedToPlayerEvents = true;
+        }
     }
 
     public void UnsubscribeToPlayerEvents()
